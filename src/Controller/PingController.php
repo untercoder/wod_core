@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PingController extends AbstractController
 {
-    #[Route('/')]
+    #[Route('/ping')]
     public function ping(): Response
     {
         return $this->json(['response' => 'ok']);
