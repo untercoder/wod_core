@@ -22,3 +22,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Services\TelegramLogger:
+        arguments:
+            - "log_bot"
+            - '@Borsaco\TelegramBotApiBundle\Service\Bot'
+            - '%env(resolve:TELEGRAM_DEBUG_USER_DEV)%'
+            - '@twig'
+
+    App\Controller\TelegramWebhookController:
+        arguments:
+            - '@App\Services\TelegramLogger'

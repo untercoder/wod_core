@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,17 +17,21 @@ class PingController extends AbstractController
     }
 
     #[Route('/check_bot')]
-    public function checkBot(Bot $bot) : Response
+    public function checkBot(Bot $bot, LoggerInterface $logger): Response
     {
         $wod_bot = $bot->getBot('wod_dev');
 
-        $wod_bot->sendMessage([
+        $user = $wod_bot->getMe();
+        $message_obj = $wod_bot->sendMessage([
             'chat_id' => 670407504,
             'text' => "Hello im work!",
             'parse_mod' => 'text'
         ]);
 
-        return $this->json(['user' => $wod_bot->getMe()]);
+        $logger->info($message_obj);
+        $logger->info($user);
+
+        return $this->json(['user' => $user]);
     }
 
 }
