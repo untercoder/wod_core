@@ -23,13 +23,22 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Services\TelegramLogger:
+    App\Services\Telegram\Logger\LoggerTelegramBot:
         arguments:
-            - "log_bot"
             - '@Borsaco\TelegramBotApiBundle\Service\Bot'
             - '%env(resolve:TELEGRAM_DEBUG_USER_DEV)%'
-            - '@twig'
+
+    App\Services\Telegram\Logger\TelegramLogger:
+        arguments:
+            - '@App\Services\Telegram\Logger\LoggerTelegramBot'
 
     App\Controller\TelegramWebhookController:
         arguments:
-            - '@App\Services\TelegramLogger'
+            - '@App\Services\Telegram\Logger\TelegramLogger'
+
+    App\EventListener\ExceptionListener:
+        arguments:
+            - '@twig'
+            - '@App\Services\Telegram\Logger\TelegramLogger'
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
