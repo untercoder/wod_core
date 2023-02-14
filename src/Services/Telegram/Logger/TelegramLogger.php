@@ -4,7 +4,6 @@ namespace App\Services\Telegram\Logger;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
-use Twig\Environment;
 
 class TelegramLogger extends AbstractLogger implements LoggerInterface
 {

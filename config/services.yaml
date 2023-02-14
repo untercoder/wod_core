@@ -23,10 +23,30 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\Services\Telegram\WorldOfDiaries\Command\HelpCommand:
+        arguments:
+
+    App\Services\Telegram\WorldOfDiaries\Command\StartCommand:
+        arguments:
+
+    App\Services\Telegram\Logger\LoggerCommandContainer:
+        arguments:
+
+    App\Services\Telegram\WorldOfDiaries\WoDCommandContainer:
+        arguments:
+            - '@App\Services\Telegram\WorldOfDiaries\Command\HelpCommand'
+            - '@App\Services\Telegram\WorldOfDiaries\Command\StartCommand'
+
     App\Services\Telegram\Logger\LoggerTelegramBot:
         arguments:
             - '@Borsaco\TelegramBotApiBundle\Service\Bot'
             - '%env(resolve:TELEGRAM_DEBUG_USER_DEV)%'
+            - '@App\Services\Telegram\Logger\LoggerCommandContainer'
+
+    App\Services\Telegram\WorldOfDiaries\WorldOfDiariesBot:
+        arguments:
+            - '@Borsaco\TelegramBotApiBundle\Service\Bot'
+            - '@App\Services\Telegram\WorldOfDiaries\WoDCommandContainer'
 
     App\Services\Telegram\Logger\TelegramLogger:
         arguments:
