@@ -23,11 +23,25 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\Services\Telegram\WorldOfDiaries\Command\ViewPostsCommand:
+        arguments:
+            - '@translator'
+            - '@App\Services\Telegram\Logger\TelegramLogger'
+
+    App\Services\Telegram\WorldOfDiaries\Command\CreatePostCommand:
+        arguments:
+            - '@translator'
+            - '@App\Services\Telegram\Logger\TelegramLogger'
+
     App\Services\Telegram\WorldOfDiaries\Command\HelpCommand:
         arguments:
+            - '@translator'
+            - '@App\Services\Telegram\Logger\TelegramLogger'
 
     App\Services\Telegram\WorldOfDiaries\Command\StartCommand:
         arguments:
+            - '@translator'
+            - '@App\Services\Telegram\Logger\TelegramLogger'
 
     App\Services\Telegram\Logger\LoggerCommandContainer:
         arguments:
@@ -36,6 +50,8 @@ services:
         arguments:
             - '@App\Services\Telegram\WorldOfDiaries\Command\HelpCommand'
             - '@App\Services\Telegram\WorldOfDiaries\Command\StartCommand'
+            - '@App\Services\Telegram\WorldOfDiaries\Command\CreatePostCommand'
+            - '@App\Services\Telegram\WorldOfDiaries\Command\ViewPostsCommand'
 
     App\Services\Telegram\Logger\LoggerTelegramBot:
         arguments:

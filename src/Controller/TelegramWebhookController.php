@@ -13,8 +13,7 @@ class TelegramWebhookController extends AbstractController
     #[Route('/webhooks/telegram')]
     public function index(WorldOfDiariesBot $bot, TelegramLogger $logger): Response
     {
-        $update = $bot->setUpdateHandler(true);
-        $logger->info($update);
+        $bot->setUpdateHandler(true);
         return new Response();
     }
 }

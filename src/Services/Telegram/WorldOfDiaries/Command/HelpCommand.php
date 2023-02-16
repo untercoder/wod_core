@@ -2,9 +2,10 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
-use Telegram\Bot\Commands\Command;
 
-class HelpCommand extends Command
+use App\Services\Telegram\BaseCommand;
+
+class HelpCommand extends BaseCommand
 {
     /**
      * @var string Command Name
@@ -18,6 +19,7 @@ class HelpCommand extends Command
 
     public function handle()
     {
-        $this->replyWithMessage(['text' => 'Hello! Im Help Command!']);
+        $this->logger->info('Я из хелпа.');
+        $this->replyWithMessage(['text' => $this->textRes->trans('help.commands', [], 'message', 'ru')]);
     }
 }

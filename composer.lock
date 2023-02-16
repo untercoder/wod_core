@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d172cabc31c1e4150df29bd9aa44ec8",
+    "content-hash": "c35b924ca6e66738e3143af13a6526da",
     "packages": [
         {
             "name": "borsaco/telegram-bot-api-bundle",
