@@ -2,9 +2,7 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
-use App\Services\Telegram\BaseCommand;
-
-class StartCommand extends BaseCommand
+class StartCommand extends WodCommand
 {
 
     /**
@@ -17,35 +15,29 @@ class StartCommand extends BaseCommand
      */
     protected $description = "Start Command to get you started";
 
-
     public function handle()
     {
-        $update = $this->telegram->getWebhookUpdate();
+        $message = ($this->telegram->getWebhookUpdate())->message;
 
-        $chatId = $update->message->from->id;
-        $username = $update->message->from->username;
+        $this->logger->debug($message);
 
-        // Create keyboard
-        $keyboard = [
-            "inline_keyboard" => [
-                [
-                    [
-                        "text" => "Посмотреть анкеты",
-                        "callback_data" => "view"
-                    ],
-                    [
-                        "text" => "Создать свою",
-                        "callback_data" => "create"
-                    ],
-                ]
-            ]
-        ];
+        $this->setUser($message);
+
+        $this->logger->debug(json_encode($this->user));
+
+        $helloMessage = $this->textRes->trans(
+            'commands.start.hello',
+            ['%username%' => $this->user->getUsername()],
+            'message',
+            'ru'
+        );
+
+        $commandListMessage = $this->textRes->trans('commands.help.list', [], 'message', 'ru');
 
         $this->telegram->sendMessage([
-            'chat_id' => $chatId,
-            'text' => $this->textRes->trans('start.hello', ['%username%' => $username], 'message', 'ru'),
-            'reply_markup' => json_encode($keyboard)
+            'chat_id' => $this->user->getChatId(),
+            'text' => $helloMessage . $commandListMessage,
+            'parse_mode' => 'HTML'
         ]);
-
     }
 }

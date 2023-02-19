@@ -10,7 +10,7 @@ class WorldOfDiariesBot extends TelegramBot
 {
     private const BOT_NAME = 'wod_dev';
 
-    public function __construct(Bot $apiConstruct, WoDCommandContainer $commandContainer)
+    public function __construct(Bot $apiConstruct, WodCommandContainer $commandContainer)
     {
         parent::__construct(self::BOT_NAME, $apiConstruct, $commandContainer);
     }

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TelegramWebhookController extends AbstractController
 {
     #[Route('/webhooks/telegram')]
-    public function index(WorldOfDiariesBot $bot, TelegramLogger $logger): Response
+    public function index(WorldOfDiariesBot $bot): Response
     {
         $bot->setUpdateHandler(true);
         return new Response();

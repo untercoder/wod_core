@@ -8,13 +8,13 @@ use App\Services\Telegram\WorldOfDiaries\Command\HelpCommand;
 use App\Services\Telegram\WorldOfDiaries\Command\StartCommand;
 use App\Services\Telegram\WorldOfDiaries\Command\ViewPostsCommand;
 
-class WoDCommandContainer implements CommandContainerInterface
+class WodCommandContainer implements CommandContainerInterface
 {
     public function __construct(
-        private HelpCommand $helpCommand,
-        private StartCommand $startCommand,
-        private CreatePostCommand $createPostCommand,
-        private ViewPostsCommand $viewPostsCommand,
+        private readonly HelpCommand $helpCommand,
+        private readonly StartCommand $startCommand,
+        private readonly CreatePostCommand $createPostCommand,
+        private readonly ViewPostsCommand $viewPostsCommand,
     ) {
     }
 
