@@ -4,7 +4,7 @@ namespace App\Services\Telegram\WorldOfDiaries\Command;
 
 use App\Services\Telegram\BaseCommand;
 
-class CreatePostCommand extends BaseCommand
+class PublishPostCommand extends BaseCommand
 {
     /**
      * @var string Command Name

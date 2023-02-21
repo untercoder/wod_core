@@ -2,7 +2,7 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
-class StartCommand extends WodCommand
+class StartCommand extends WodBaseCommand
 {
 
     /**
@@ -17,12 +17,14 @@ class StartCommand extends WodCommand
 
     public function handle()
     {
-        $message = ($this->telegram->getWebhookUpdate())->message;
+        $initMessage = ($this->telegram->getWebhookUpdate())->message;
 
-        $this->logger->debug($message);
+        //dev
+        $this->logger->debug($initMessage);
 
-        $this->setUser($message);
+        $this->setUser($initMessage);
 
+        //dev
         $this->logger->debug(json_encode($this->user));
 
         $helloMessage = $this->textRes->trans(
@@ -32,12 +34,29 @@ class StartCommand extends WodCommand
             'ru'
         );
 
-        $commandListMessage = $this->textRes->trans('commands.help.list', [], 'message', 'ru');
+        $commandListMessage = $this->textRes->trans(
+            'commands.help.list',
+            [],
+            'message',
+            'ru'
+        );
 
-        $this->telegram->sendMessage([
-            'chat_id' => $this->user->getChatId(),
-            'text' => $helloMessage . $commandListMessage,
-            'parse_mode' => 'HTML'
-        ]);
+        $commandListTitleMessage = $this->textRes->trans(
+            'commands.help.title',
+            [],
+            'message',
+            'ru'
+        );
+
+        $responseMessage = $this->template->render(
+            'command/start.html.twig',
+            [
+                'hello' => $helloMessage,
+                'list_title' => $commandListTitleMessage,
+                'list' => $commandListMessage
+            ]
+        );
+
+        $this->sendMessageToUser($this->user, $responseMessage, $this->telegram);
     }
 }

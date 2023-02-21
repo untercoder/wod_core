@@ -14,9 +14,4 @@ abstract class BaseCommand extends Command
         protected TelegramLogger $logger
     ) {
     }
-
-    public function handle()
-    {
-        // TODO: Implement handle() method.
-    }
 }

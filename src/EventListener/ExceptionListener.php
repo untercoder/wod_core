@@ -22,7 +22,7 @@ class ExceptionListener
 
     private function htmlErrorMessage(Throwable $exception): string
     {
-        return $this->twig->render('error_message.html.twig', [
+        return $this->twig->render('logger/error_message.html.twig', [
             'message' => $exception->getMessage(),
             'file' => $exception->getFile(),
             'trace' => $exception->getTraceAsString(),
