@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Entity\Interface\EntityInterface;
 use App\Repository\ActionsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActionsRepository::class)]
-class Actions
+class Actions implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -77,5 +78,10 @@ class Actions
         $this->last_activity = $last_activity;
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return get_object_vars($this);
     }
 }

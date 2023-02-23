@@ -6,13 +6,14 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\Telegram\EntityHelper;
 use App\Services\Telegram\Logger\TelegramLogger;
-use DateTimeZone;
+use App\Services\Telegram\WorldOfDiaries\Trait\DateTrait;
 use Doctrine\Persistence\ManagerRegistry;
-use http\Env\Request;
 use Telegram\Bot\Objects\Message;
 
 class UserHelper extends EntityHelper
 {
+    use DateTrait;
+
     public function __construct(
         private UserRepository $userRepository,
         private ManagerRegistry $doctrine,
@@ -20,7 +21,9 @@ class UserHelper extends EntityHelper
     ) {
         parent::__construct($this->userRepository, $this->doctrine);
     }
-    public function make(Message $data) : User {
+
+    public function make(Message $data): User
+    {
         $user = new User();
         $user->setUsername($data->from->username);
         $user->setChatId($data->chat->id);
@@ -29,21 +32,23 @@ class UserHelper extends EntityHelper
         return $user;
     }
 
-    private function registerUser(Message $data) : User {
+    private function registerUser(Message $data): User
+    {
         $user = $this->make($data);
         $this->save($user);
         return $user;
     }
 
-    private function authUser(Message $data) : User|false {
-        if($this->empty($data->chat->id)) {
-            return false;
+    private function authUser(Message $data): User|false
+    {
+        $user = $this->userRepository->findOneBy(['chatId' => $data->chat->id]);
+        if (isset($user)) {
+            return $user;
         }
-        $user = $this->getOne(['chatId' => $data->chat->id]);
-        return $user;
+        return false;
     }
 
-    public function initUser(Message $data) : User
+    public function initUser(Message $data): User
     {
         $initUser = $this->authUser($data);
 
@@ -58,7 +63,4 @@ class UserHelper extends EntityHelper
         return $initUser;
     }
 
-    private function getDateTime(int $unixtime): \DateTime{
-        return \DateTime::createFromFormat('U', $unixtime, new DateTimeZone('Europe/Moscow'));
-    }
 }

@@ -3,6 +3,7 @@
 namespace App\Services\Telegram\WorldOfDiaries;
 
 use App\Services\Telegram\TelegramBot;
+use App\Services\Telegram\WorldOfDiaries\Helper\Entity\ActionHelper;
 use Borsaco\TelegramBotApiBundle\Service\Bot;
 use Telegram\Bot\Objects\Update;
 
@@ -13,7 +14,8 @@ class WorldOfDiariesBot extends TelegramBot
     public function __construct(
         Bot $apiConstruct,
         WodCommandContainer $commandContainer,
-        private CallbackObserver $callbackObserver
+        private CallbackObserver $callbackObserver,
+        private ActionHelper $actionHelper
     ) {
         parent::__construct(self::BOT_NAME, $apiConstruct, $commandContainer);
     }
@@ -23,7 +25,8 @@ class WorldOfDiariesBot extends TelegramBot
         $update = $this->telegramBotApi->getWebhookUpdate();
 
         if (!$this->isCommand($update)) {
-            $callback = $this->callbackObserver->callbackFactory();
+            $action = $this->actionHelper->getActiveAction($update->message->chat->id);
+            $callback = $this->callbackObserver->callbackFactory($action);
             $callback->setApi($this->telegramBotApi);
             $callback->setUpdate($update);
             $callback->action();

@@ -2,8 +2,6 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
-use App\Services\Telegram\BaseCommand;
-
 class ViewPostsCommand extends BaseCommand
 {
     /**
@@ -18,6 +16,14 @@ class ViewPostsCommand extends BaseCommand
 
     public function handle()
     {
+        $this->initCommand();
+
+        $action = $this->actionHelper->make($this->userCall->message);
+
+        $action->setType($this->actionHelper::VIEW_ACTION);
+
+        $this->actionHelper->save($action);
+
         $this->logger->info('Я view');
     }
 }

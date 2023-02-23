@@ -2,7 +2,7 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
-class StartCommand extends WodBaseCommand
+class StartCommand extends BaseCommand
 {
 
     /**
@@ -17,13 +17,7 @@ class StartCommand extends WodBaseCommand
 
     public function handle()
     {
-        $initMessage = ($this->telegram->getWebhookUpdate())->message;
-
-        //dev
-        $this->logger->debug($initMessage);
-
-        $this->setUser($initMessage);
-
+        $this->initCommand();
         //dev
         $this->logger->debug(json_encode($this->user));
 

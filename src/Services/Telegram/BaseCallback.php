@@ -2,6 +2,7 @@
 
 namespace App\Services\Telegram;
 
+use App\Entity\Actions;
 use App\Services\Telegram\Interface\CallbackInterface;
 use App\Services\Telegram\Logger\TelegramLogger;
 use App\Services\Telegram\WorldOfDiaries\Trait\MessageTrait;

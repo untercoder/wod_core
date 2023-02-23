@@ -3,9 +3,9 @@
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
 
-use App\Services\Telegram\BaseCommand;
 
-class AboutCommand extends WodBaseCommand
+
+class AboutCommand extends BaseCommand
 {
     /**
      * @var string Command Name
@@ -19,9 +19,7 @@ class AboutCommand extends WodBaseCommand
 
     public function handle()
     {
-        $initMessage = ($this->telegram->getWebhookUpdate())->message;
-
-        $this->setUser($initMessage);
+        $this->initCommand();
 
         $infoMessage = $this->textRes->trans(
             'commands.about.info',

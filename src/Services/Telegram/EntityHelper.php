@@ -16,9 +16,6 @@ abstract class EntityHelper implements EntityHelperInterface
     ) {
     }
 
-    public function empty(int $chatId) : bool {
-        return !($this->repository->findOneBy(['chatId' => $chatId]));
-    }
     public function save(EntityInterface $entity): void
     {
         $entityManager = $this->doctrine->getManager();
@@ -26,13 +23,5 @@ abstract class EntityHelper implements EntityHelperInterface
         $entityManager->flush();
     }
 
-    public function getAll(array $params): array
-    {
-        return $this->repository->findBy($params);
-    }
 
-    public function getOne(array $params): EntityInterface
-    {
-        return $this->repository->findOneBy($params);
-    }
 }
