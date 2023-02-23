@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Telegram\WorldOfDiaries\Command;
+namespace App\Services\Telegram;
 
 use App\Entity\Actions;
 use App\Entity\User;
@@ -36,11 +36,9 @@ abstract class BaseCommand extends Command
     {
         $this->userCall = $this->telegram->getWebhookUpdate();
         $this->user = $this->userHelper->initUser($this->userCall->message);
-
         $this->action = $this->actionHelper->getActiveAction($this->user->getChatId());
 
         if ($this->action) {
-            $this->logger->debug("REMOVE: " . json_encode($this->action, JSON_PRETTY_PRINT));
             $this->actionHelper->remove($this->action);
         }
     }

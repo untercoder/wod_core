@@ -15,8 +15,11 @@ class Actions implements EntityInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $chat_id = null;
+    #[ORM\Column(unique: true)]
+    private ?int $chatId = null;
+
+    #[ORM\Column(unique: true)]
+    private ?int $userId = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
@@ -34,12 +37,24 @@ class Actions implements EntityInterface
 
     public function getChatId(): ?int
     {
-        return $this->chat_id;
+        return $this->chatId;
     }
 
-    public function setChatId(int $chat_id): self
+    public function setChatId(int $chatId): self
     {
-        $this->chat_id = $chat_id;
+        $this->chatId = $chatId;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(int $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }

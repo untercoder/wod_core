@@ -11,9 +11,10 @@ use Telegram\Bot\Objects\Update;
 
 abstract class BaseCallback implements CallbackInterface
 {
-    protected Update $update;
+    protected Update|null $update = null;
 
-    protected Api $telegram;
+    protected Api|null $telegram = null;
+    protected Actions|false $action = false;
 
     public function __construct(
         protected TelegramLogger $logger,
@@ -33,7 +34,15 @@ abstract class BaseCallback implements CallbackInterface
         $this->telegram = $telegram;
     }
 
-    public function action(): void
+    /**
+     * @param Actions $action
+     */
+    public function setAction(Actions|false $action): void
+    {
+        $this->action = $action;
+    }
+
+    public function initCallback(): void
     {
         try {
             if (!isset($this->telegram)) {
@@ -50,5 +59,7 @@ abstract class BaseCallback implements CallbackInterface
             $this->logger->critical($exception->getMessage());
         }
     }
+
+
 
 }

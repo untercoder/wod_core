@@ -14,8 +14,8 @@ class Post implements EntityInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
+    #[ORM\Column(unique: true)]
+    private ?int $userId = null;
 
     #[ORM\Column]
     private array $body = [];
@@ -30,12 +30,12 @@ class Post implements EntityInterface
 
     public function getUserId(): ?int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     public function setUserId(int $user_id): self
     {
-        $this->user_id = $user_id;
+        $this->userId = $user_id;
 
         return $this;
     }
@@ -66,6 +66,6 @@ class Post implements EntityInterface
 
     public function jsonSerialize(): mixed
     {
-        // TODO: Implement jsonSerialize() method.
+        return get_object_vars($this);
     }
 }

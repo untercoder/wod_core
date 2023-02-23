@@ -2,6 +2,8 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
+use App\Services\Telegram\BaseCommand;
+
 class PublishPostCommand extends BaseCommand
 {
     /**
@@ -21,6 +23,10 @@ class PublishPostCommand extends BaseCommand
         $action = $this->actionHelper->make($this->userCall->message);
 
         $action->setType($this->actionHelper::PUBlISH_ACTION);
+
+        $action->setUserId($this->user->getId());
+
+        $action->setState(["stage" => "validate"]);
 
         $this->actionHelper->save($action);
 

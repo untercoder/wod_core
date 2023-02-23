@@ -37,7 +37,7 @@ class ActionHelper extends EntityHelper
 
     public function getActiveAction(int $chatId): Actions|false
     {
-        $action = $this->repository->findOneBy(['chat_id' => $chatId]);
+        $action = $this->repository->findOneBy(['chatId' => $chatId]);
         if (isset($action)) {
             return $action;
         }

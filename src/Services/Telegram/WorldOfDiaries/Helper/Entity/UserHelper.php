@@ -53,7 +53,6 @@ class UserHelper extends EntityHelper
         $initUser = $this->authUser($data);
 
         if ($initUser) {
-            $this->logger->info('Пользователь ' . $initUser->getUsername() . " уже авторизован");
             $initUser->setlastActivity($this->getDateTime($data->date));
         } else {
             $initUser = $this->registerUser($data);

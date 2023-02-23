@@ -25,7 +25,6 @@ class ExceptionListener
         return $this->twig->render('logger/error_message.html.twig', [
             'message' => $exception->getMessage(),
             'file' => $exception->getFile(),
-            'trace' => $exception->getTraceAsString(),
             'line' => $exception->getLine(),
         ]);
     }

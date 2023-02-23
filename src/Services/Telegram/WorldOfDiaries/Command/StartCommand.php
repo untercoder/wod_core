@@ -2,6 +2,8 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
+use App\Services\Telegram\BaseCommand;
+
 class StartCommand extends BaseCommand
 {
 

@@ -7,7 +7,7 @@ use Telegram\Bot\Objects\Update;
 
 interface CallbackInterface
 {
-    public function action() : void;
+    public function initCallback() : void;
 
     public function setUpdate(Update $update) : void;
 

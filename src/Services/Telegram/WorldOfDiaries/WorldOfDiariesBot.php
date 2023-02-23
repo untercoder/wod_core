@@ -11,6 +11,8 @@ class WorldOfDiariesBot extends TelegramBot
 {
     private const BOT_NAME = 'wod_dev';
 
+    private array $commandList = ['/start', '/about', '/view', '/publish'];
+
     public function __construct(
         Bot $apiConstruct,
         WodCommandContainer $commandContainer,
@@ -29,7 +31,8 @@ class WorldOfDiariesBot extends TelegramBot
             $callback = $this->callbackObserver->callbackFactory($action);
             $callback->setApi($this->telegramBotApi);
             $callback->setUpdate($update);
-            $callback->action();
+            $callback->setAction($action);
+            $callback->initCallback();
         }
     }
 
@@ -39,7 +42,7 @@ class WorldOfDiariesBot extends TelegramBot
 
         if (isset($entities)) {
             foreach ($entities as $entity) {
-                if ($entity->type === "bot_command") {
+                if ($entity->type === "bot_command" and in_array($update->message->text, $this->commandList)) {
                     return true;
                 }
             }

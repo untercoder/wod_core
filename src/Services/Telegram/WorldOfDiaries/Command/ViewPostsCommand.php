@@ -2,6 +2,8 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
+use App\Services\Telegram\BaseCommand;
+
 class ViewPostsCommand extends BaseCommand
 {
     /**
@@ -21,6 +23,8 @@ class ViewPostsCommand extends BaseCommand
         $action = $this->actionHelper->make($this->userCall->message);
 
         $action->setType($this->actionHelper::VIEW_ACTION);
+
+        $action->setUserId($this->user->getId());
 
         $this->actionHelper->save($action);
 
