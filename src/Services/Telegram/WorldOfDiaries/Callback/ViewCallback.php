@@ -9,6 +9,6 @@ class ViewCallback extends WodBaseCallback
     {
         $this->setUser($this->update->message);
 
-        $this->sendMessageToUser($this->user, 'Йоу я callback просмотра', $this->telegram);
+        $this->sendMessageToUserTemplate($this->user, 'Йоу я callback просмотра', $this->telegram);
     }
 }

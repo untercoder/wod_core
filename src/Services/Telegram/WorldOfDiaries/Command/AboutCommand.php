@@ -34,6 +34,6 @@ class AboutCommand extends BaseCommand
             ]
         );
 
-       $this->sendMessageToUser($this->user, $infoMessage, $this->telegram);
+       $this->sendMessageToUserTemplate($this->user, $infoMessage, $this->telegram);
     }
 }

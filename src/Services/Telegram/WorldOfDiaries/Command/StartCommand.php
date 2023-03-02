@@ -53,6 +53,6 @@ class StartCommand extends BaseCommand
             ]
         );
 
-        $this->sendMessageToUser($this->user, $responseMessage, $this->telegram);
+        $this->sendMessageToUserTemplate($this->user, $responseMessage, $this->telegram);
     }
 }

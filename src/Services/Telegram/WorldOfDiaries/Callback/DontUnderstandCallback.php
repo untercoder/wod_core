@@ -2,27 +2,36 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Callback;
 
-use function Symfony\Component\Translation\t;
-
 class DontUnderstandCallback extends WodBaseCallback
 {
 
+    private string $render;
     public function handle(): void
     {
-        $this->setUser($this->update->message);
+        if($this->message !== null) {
 
-        $dontUnderstandMessage = $this->textRes->trans(
-            'callback.understand.message',
-            ['username' => $this->user->getUsername()],
-            'message',
-            'ru'
-        );
+            $this->setUser($this->message);
 
-        $render = $this->templates->render(
-            'callback/understand.html.twig',
-            ['message' => $dontUnderstandMessage]
-        );
+            $dontUnderstandMessage = $this->textRes->trans(
+                'callback.understand.message',
+                ['username' => $this->user->getUsername()],
+                'message',
+                'ru'
+            );
 
-        $this->sendMessageToUser($this->user, $render, $this->telegram);
+            $this->render = $this->templates->render(
+                'callback/understand.html.twig',
+                ['message' => $dontUnderstandMessage]
+            );
+        }
+
+        if($this->callback !== null) {
+
+            $this->setUser($this->callback->message);
+
+            $this->render = "Круто ты нажал на кнопку! Но она уже не активна(";
+        }
+
+        $this->sendMessageToUserTemplate($this->user, $this->render, $this->telegram);
     }
 }

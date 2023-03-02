@@ -18,10 +18,16 @@ class Post implements EntityInterface
     private ?int $userId = null;
 
     #[ORM\Column]
-    private array $body = [];
+    private ?int $postId = null;
+
+    #[ORM\Column(unique: true)]
+    private ?int $chatId = null;
 
     #[ORM\Column(length: 255)]
     private ?string $priority = null;
+
+    #[ORM\Column]
+    private ?bool $published = null;
 
     public function getId(): ?int
     {
@@ -40,18 +46,6 @@ class Post implements EntityInterface
         return $this;
     }
 
-    public function getBody(): array
-    {
-        return $this->body;
-    }
-
-    public function setBody(array $body): self
-    {
-        $this->body = $body;
-
-        return $this;
-    }
-
     public function getPriority(): ?string
     {
         return $this->priority;
@@ -62,6 +56,37 @@ class Post implements EntityInterface
         $this->priority = $priority;
 
         return $this;
+    }
+
+    public function getPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(?bool $published): void
+    {
+        $this->published = $published;
+    }
+
+    public function getPostId(): ?int
+    {
+        return $this->postId;
+    }
+
+    public function setPostId(?int $postId): void
+    {
+        $this->postId = $postId;
+    }
+
+
+    public function getChatId(): ?int
+    {
+        return $this->chatId;
+    }
+
+    public function setChatId(?int $chatId): void
+    {
+        $this->chatId = $chatId;
     }
 
     public function jsonSerialize(): mixed

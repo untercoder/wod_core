@@ -2,14 +2,17 @@
 
 namespace App\Services\Telegram\Interface;
 
+use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Api;
-use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Objects\CallbackQuery;
 
 interface CallbackInterface
 {
     public function initCallback() : void;
 
-    public function setUpdate(Update $update) : void;
+    public function setMessage(Message $message) : void;
+
+    public function setCallback(CallbackQuery $callback);
 
     public function setApi(Api $telegram) : void;
 

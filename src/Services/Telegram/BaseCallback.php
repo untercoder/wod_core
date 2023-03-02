@@ -6,14 +6,17 @@ use App\Entity\Actions;
 use App\Services\Telegram\Interface\CallbackInterface;
 use App\Services\Telegram\Logger\TelegramLogger;
 use App\Services\Telegram\WorldOfDiaries\Trait\MessageTrait;
+use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Api;
-use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Objects\CallbackQuery;
 
 abstract class BaseCallback implements CallbackInterface
 {
-    protected Update|null $update = null;
+    protected ?Api $telegram = null;
 
-    protected Api|null $telegram = null;
+    protected ?Message $message = null;
+
+    protected ?CallbackQuery $callback = null;
     protected Actions|false $action = false;
 
     public function __construct(
@@ -21,12 +24,16 @@ abstract class BaseCallback implements CallbackInterface
     ) {
     }
 
-
     use MessageTrait;
 
-    public function setUpdate(Update $update): void
+    public function setMessage(Message $message): void
     {
-        $this->update = $update;
+        $this->message = $message;
+    }
+
+    public function setCallback(CallbackQuery $callback)
+    {
+        $this->callback = $callback;
     }
 
     public function setApi(Api $telegram): void
@@ -49,8 +56,8 @@ abstract class BaseCallback implements CallbackInterface
                 throw new \Exception('Undefined api telegram in ' . self::class);
             }
 
-            if (!isset($this->update)) {
-                throw new \Exception('Undefined update object in' . self::class);
+            if (!isset($this->message) && !isset($this->callback)) {
+                throw new \Exception('Undefined message and callback object in' . self::class);
             }
 
             $this->handle();
