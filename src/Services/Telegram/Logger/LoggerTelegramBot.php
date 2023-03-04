@@ -9,7 +9,7 @@ use Telegram\Bot\Objects\Message;
 
 class LoggerTelegramBot extends TelegramBot
 {
-    private const BOT_NAME = 'log_bot';
+    private const BOT_NAME = 'log';
     private const PARSE_MODE = 'HTML';
 
     public function __construct(

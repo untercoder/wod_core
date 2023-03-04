@@ -13,7 +13,7 @@ use Telegram\Bot\Objects\Message;
 
 class WorldOfDiariesBot extends TelegramBot
 {
-    private const BOT_NAME = 'wod_dev';
+    private const BOT_NAME = 'wod';
 
     private array $commandList = ['/start', '/about', '/view', '/publish'];
 

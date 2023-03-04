@@ -17,13 +17,17 @@ telegram_bot_api:
   # Bots:
   bots:
     # The bot name
-    wod_dev:
-      # Dev бот для локальной разработки
-      token: '%env(TELEGRAM_API_TOKEN_DEV)%'
+    wod:
+      # Бот с основной логикой
+      token: '%env(TELEGRAM_API_TOKEN_WOD)%'
       maintenance: false
-    log_bot:
-      # Бот для просмотра хуков и логов dev бота
-      token: '%env(TELEGRAM_LOG_BOT_DEV)%'
+    log:
+      # Бот для логирования
+      token: '%env(TELEGRAM_API_TOKEN_LOG)%'
+      maintenance: false
+    admin:
+      # Бот модерации
+      token: '%env(TELEGRAM_API_TOKEN_ADMIN)%'
       maintenance: false
 
   # The default bot returned when you call getBot()
