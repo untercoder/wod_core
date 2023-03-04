@@ -9,7 +9,7 @@ telegram_bot_api:
   development:
     # implement in next version
     # Telegram user_id of developers accounts
-    developers_id: ['%env(TELEGRAM_DEBUG_USER_DEV)%']
+    developers_id: ['%env(TELEGRAM_DEBUG_USER)%']
     # If this mode is enabled, the robot only responds to the developers
     maintenance:
       text: "The robot is being repaired! Please come back later."
@@ -23,12 +23,12 @@ telegram_bot_api:
       maintenance: false
     log:
       # Бот для логирования
-      token: '%env(TELEGRAM_API_TOKEN_LOG)%'
+      token: '997130498:AAFOD_Hg7bgzuhehkqWHrWlGFK8aaK1wrxo'
       maintenance: false
     admin:
       # Бот модерации
-      token: '%env(TELEGRAM_API_TOKEN_ADMIN)%'
+      token: '6030374241:AAFXRSvRTaghferSOewgJvDbUsOcN3kKuH0'
       maintenance: false
 
   # The default bot returned when you call getBot()
-  default: 'wod_dev'
+  default: 'wod'

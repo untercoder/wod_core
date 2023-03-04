@@ -26,7 +26,7 @@ services:
     App\Services\Telegram\Logger\LoggerTelegramBot:
         arguments:
             - '@Borsaco\TelegramBotApiBundle\Service\Bot'
-            - '%env(resolve:TELEGRAM_DEBUG_USER_DEV)%'
+            - '%env(TELEGRAM_DEBUG_USER)%'
             - '@App\Services\Telegram\Logger\LoggerCommandContainer'
 
     App\EventListener\ExceptionListener:
