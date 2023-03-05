@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Interface\EntityInterface;
 use App\Repository\PostRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
-class Post implements EntityInterface
+class Post implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,6 +29,12 @@ class Post implements EntityInterface
     #[ORM\Column]
     private ?bool $published = null;
 
+    #[ORM\Column]
+    private ?string $moderateState = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $lastActivity  = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,6 +44,29 @@ class Post implements EntityInterface
     {
         return $this->userId;
     }
+
+    public function getModerateState(): ?string
+    {
+        return $this->moderateState;
+    }
+
+    public function setModerateState(?string $moderateState): void
+    {
+        $this->moderateState = $moderateState;
+    }
+
+    public function getLastActivity(): ?\DateTimeInterface
+    {
+        return $this->lastActivity;
+    }
+
+
+    public function setLastActivity(?\DateTimeInterface $lastActivity): void
+    {
+        $this->lastActivity = $lastActivity;
+    }
+
+
 
     public function setUserId(int $user_id): self
     {

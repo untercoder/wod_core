@@ -2,9 +2,7 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
-use App\Services\Telegram\BaseCommand;
-
-class ViewPostsCommand extends BaseCommand
+class ViewPostsWodCommand extends BaseWodCommand
 {
     /**
      * @var string Command Name

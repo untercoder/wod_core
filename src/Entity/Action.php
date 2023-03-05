@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Interface\EntityInterface;
-use App\Repository\ActionsRepository;
+use App\Repository\ActionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ActionsRepository::class)]
-class Actions implements EntityInterface
+#[ORM\Entity(repositoryClass: ActionRepository::class)]
+class Action implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

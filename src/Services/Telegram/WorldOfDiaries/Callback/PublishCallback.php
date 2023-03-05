@@ -2,12 +2,12 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Callback;
 
+use App\Helper\Entity\ActionHelper;
+use App\Helper\Entity\PostHelper;
+use App\Helper\Entity\UserHelper;
+use App\Helper\Keyboard\EditKeyboard;
+use App\Helper\Keyboard\KeyboardHelper;
 use App\Services\Telegram\Logger\TelegramLogger;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\ActionHelper;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\PostHelper;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\UserHelper;
-use App\Services\Telegram\WorldOfDiaries\Helper\Keyboard\EditKeyboard;
-use App\Services\Telegram\WorldOfDiaries\Helper\Keyboard\KeyboardHelper;
 use Doctrine\DBAL\Exception;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Telegram\Bot\Objects\Message;
@@ -83,7 +83,6 @@ class PublishCallback extends WodBaseCallback
             $message = $this->validateMessages($this->message);
 
             if ($message) {
-
                 $newPostOkMessage = $this->textRes->trans('callback.publish.new_post_ok', [], 'message', 'ru');
 
                 $this->sendMessageToUserTemplate(
@@ -118,25 +117,34 @@ class PublishCallback extends WodBaseCallback
             if ($message) {
                 $post = $this->postHelper->findPost($this->user);
 
-                $post->setPostId($this->message->messageId);
+                if ($post) {
+                    $this->postHelper->updatePost($post, $this->message);
 
-                $this->userHelper->save($post);
+                    $updatePostOkMessage = $this->textRes->trans(
+                        'callback.publish.update_post_ok',
+                        [],
+                        'message',
+                        'ru'
+                    );
 
-                $updatePostOkMessage = $this->textRes->trans('callback.publish.update_post_ok', [], 'message', 'ru');
+                    $this->sendMessageToUserTemplate(
+                        $this->user,
+                        $updatePostOkMessage,
+                        $this->telegram
+                    );
 
-                $this->sendMessageToUserTemplate(
-                    $this->user,
-                    $updatePostOkMessage,
-                    $this->telegram
-                );
+                    $this->switchStage(self::APPROVE_STAGE_FROM_UPDATE_POST);
 
-                $this->switchStage(self::APPROVE_STAGE_FROM_UPDATE_POST);
+                    return $this->sendPostToUserWithKeyboard(
+                        $this->user,
+                        $post,
+                        $this->telegram,
+                        $this->keyboardHelper->createEditKeyboard()
+                    );
+                }
 
-                return $this->sendPostToUserWithKeyboard(
-                    $this->user,
-                    $post,
-                    $this->telegram,
-                    $this->keyboardHelper->createEditKeyboard()
+                throw new \Exception(
+                    'Post not found: ' . json_encode($this->user, JSON_PRETTY_PRINT) . " " . self::class
                 );
             }
             throw new \Exception(
@@ -177,6 +185,21 @@ class PublishCallback extends WodBaseCallback
             );
         }
 
+        if ($this->message !== null) {
+            $pleasePushOnButtonMessage = $this->textRes->trans(
+                'callback.publish.approve.pls_push_button',
+                [],
+                'message',
+                'ru'
+            );
+
+            return $this->sendMessageToUserTemplate(
+                $this->user,
+                $pleasePushOnButtonMessage,
+                $this->telegram
+            );
+        }
+
         throw new \Exception('Approve new post error ' . self::class);
     }
 
@@ -185,6 +208,10 @@ class PublishCallback extends WodBaseCallback
         $this->switchStage(self::MODERATION_STAGE);
         //Go moderate
         $this->actionHelper->remove($this->action);
+
+        $post = $this->postHelper->findPost($this->user);
+
+        $this->postHelper->moderation($post);
 
         $moderateMessage = $this->textRes->trans('callback.publish.moderate', [], 'message', 'ru');
 
@@ -205,7 +232,6 @@ class PublishCallback extends WodBaseCallback
         }
 
         if ($message->mediaGroupId === null) {
-
             $invalidMessage = $this->textRes->trans('callback.publish.post_invalid', [], 'message', 'ru');
 
             $this->sendMessageToUserTemplate(

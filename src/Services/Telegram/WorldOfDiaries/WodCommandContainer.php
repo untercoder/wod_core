@@ -3,18 +3,18 @@
 namespace App\Services\Telegram\WorldOfDiaries;
 
 use App\Services\Telegram\Interface\CommandContainerInterface;
-use App\Services\Telegram\WorldOfDiaries\Command\PublishPostCommand;
-use App\Services\Telegram\WorldOfDiaries\Command\AboutCommand;
-use App\Services\Telegram\WorldOfDiaries\Command\StartCommand;
-use App\Services\Telegram\WorldOfDiaries\Command\ViewPostsCommand;
+use App\Services\Telegram\WorldOfDiaries\Command\PublishPostWodCommand;
+use App\Services\Telegram\WorldOfDiaries\Command\AboutWodCommand;
+use App\Services\Telegram\WorldOfDiaries\Command\StartWodCommand;
+use App\Services\Telegram\WorldOfDiaries\Command\ViewPostsWodCommand;
 
 class WodCommandContainer implements CommandContainerInterface
 {
     public function __construct(
-        private readonly AboutCommand $helpCommand,
-        private readonly StartCommand $startCommand,
-        private readonly PublishPostCommand $createPostCommand,
-        private readonly ViewPostsCommand $viewPostsCommand,
+        private readonly AboutWodCommand $helpCommand,
+        private readonly StartWodCommand $startCommand,
+        private readonly PublishPostWodCommand $createPostCommand,
+        private readonly ViewPostsWodCommand $viewPostsCommand,
     ) {
     }
 

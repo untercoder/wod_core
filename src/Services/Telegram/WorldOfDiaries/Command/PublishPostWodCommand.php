@@ -2,17 +2,16 @@
 
 namespace App\Services\Telegram\WorldOfDiaries\Command;
 
-use App\Services\Telegram\BaseCommand;
+use App\Helper\Entity\ActionHelper;
+use App\Helper\Entity\PostHelper;
+use App\Helper\Entity\UserHelper;
+use App\Helper\Keyboard\KeyboardHelper;
 use App\Services\Telegram\Logger\TelegramLogger;
 use App\Services\Telegram\WorldOfDiaries\Callback\PublishCallback;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\ActionHelper;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\PostHelper;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\UserHelper;
-use App\Services\Telegram\WorldOfDiaries\Helper\Keyboard\KeyboardHelper;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-class PublishPostCommand extends BaseCommand
+class PublishPostWodCommand extends BaseWodCommand
 {
     public function __construct(
         TranslatorInterface $textRes,

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Telegram\WorldOfDiaries\Trait;
+namespace App\Trait;
 
 use App\Entity\Post;
 use App\Entity\User;
-use App\Services\Telegram\WorldOfDiaries\Helper\Keyboard\Keyboard;
+use App\Helper\Keyboard\Keyboard;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Message;
 
@@ -15,6 +15,17 @@ trait MessageTrait
         return $telegram->sendMessage(
             [
                 'chat_id' => $user->getChatId(),
+                'text' => $renderTemplate,
+                'parse_mode' => 'HTML'
+            ]
+        );
+    }
+
+    protected function sendMessageToTemplate(int $id, string $renderTemplate, Api $telegram): Message
+    {
+        return $telegram->sendMessage(
+            [
+                'chat_id' => $id,
                 'text' => $renderTemplate,
                 'parse_mode' => 'HTML'
             ]

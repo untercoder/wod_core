@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Services\Telegram;
+namespace App\Services\Telegram\WorldOfDiaries\Command;
 
-use App\Entity\Actions;
+use App\Entity\Action;
 use App\Entity\User;
+use App\Helper\Entity\ActionHelper;
+use App\Helper\Entity\UserHelper;
 use App\Services\Telegram\Logger\TelegramLogger;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\ActionHelper;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\UserHelper;
-use App\Services\Telegram\WorldOfDiaries\Trait\MessageTrait;
+use App\Trait\MessageTrait;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Objects\Update;
 use Twig\Environment;
 
-abstract class BaseCommand extends Command
+abstract class BaseWodCommand extends Command
 {
     use MessageTrait;
 
@@ -21,7 +21,7 @@ abstract class BaseCommand extends Command
 
     protected Update $userCall;
 
-    protected Actions|false $action;
+    protected Action|false $action;
 
     public function __construct(
         protected TranslatorInterface $textRes,

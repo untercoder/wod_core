@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Telegram\WorldOfDiaries\Helper\Keyboard;
+namespace App\Helper\Keyboard;
 
 use App\Services\Telegram\Interface\KeyboardInterface;
 

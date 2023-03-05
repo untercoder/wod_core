@@ -23,11 +23,11 @@ telegram_bot_api:
       maintenance: false
     log:
       # Бот для логирования
-      token: '997130498:AAFOD_Hg7bgzuhehkqWHrWlGFK8aaK1wrxo'
+      token: '%env(TELEGRAM_API_TOKEN_LOG)%'
       maintenance: false
     admin:
       # Бот модерации
-      token: '6030374241:AAFXRSvRTaghferSOewgJvDbUsOcN3kKuH0'
+      token: '%env(TELEGRAM_API_TOKEN_ADMIN)%'
       maintenance: false
 
   # The default bot returned when you call getBot()

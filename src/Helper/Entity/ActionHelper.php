@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Services\Telegram\WorldOfDiaries\Helper\Entity;
+namespace App\Helper\Entity;
 
-use App\Entity\Actions;
-use App\Entity\Interface\EntityInterface;
-use App\Repository\ActionsRepository;
+use App\Entity\Action;
+use App\Repository\ActionRepository;
 use App\Services\Telegram\EntityHelper;
 use App\Services\Telegram\Logger\TelegramLogger;
-use App\Services\Telegram\WorldOfDiaries\Trait\DateTrait;
+use App\Trait\DateTrait;
 use Doctrine\Persistence\ManagerRegistry;
 use Telegram\Bot\Objects\Message;
 
@@ -19,7 +18,7 @@ class ActionHelper extends EntityHelper
 
     use DateTrait;
     public function __construct(
-        private ActionsRepository $repository,
+        private ActionRepository $repository,
         private ManagerRegistry $doctrine,
         private TelegramLogger $logger
     ) {
@@ -27,15 +26,15 @@ class ActionHelper extends EntityHelper
     }
 
 
-    public function make(Message $data): Actions
+    public function make(Message $data): Action
     {
-        $action = new Actions();
+        $action = new Action();
         $action->setChatId($data->chat->id);
         $action->setLastActivity($this->getDateTime($data->date));
         return $action;
     }
 
-    public function getActiveAction(int $chatId): Actions|false
+    public function getActiveAction(int $chatId): Action|false
     {
         $action = $this->repository->findOneBy(['chatId' => $chatId]);
         if (isset($action)) {
@@ -44,7 +43,7 @@ class ActionHelper extends EntityHelper
         return false;
     }
 
-    public function remove(Actions $action) : void {
+    public function remove(Action $action) : void {
         $this->repository->remove($action, true);
     }
 

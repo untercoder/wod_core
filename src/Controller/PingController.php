@@ -8,10 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PingController extends AbstractController
 {
-    #[Route('/')]
+    #[Route('/', name: 'ping', condition: '%kernel.debug%' == 1)]
     public function index(Bot $bot): \Symfony\Component\HttpFoundation\JsonResponse
     {
-        $firstBot = $bot->getBot('wod');
+        $firstBot = $bot->getBot();
         return $this->json($firstBot->getMe());
     }
 }

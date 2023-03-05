@@ -2,9 +2,9 @@
 
 namespace App\Services\Telegram\WorldOfDiaries;
 
-use App\Entity\Actions;
+use App\Entity\Action;
+use App\Helper\Entity\ActionHelper;
 use App\Services\Telegram\Interface\CallbackInterface;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\ActionHelper;
 
 class CallbackObserver
 {
@@ -13,7 +13,7 @@ class CallbackObserver
     {
     }
 
-    public function callbackFactory(Actions|false $action): CallbackInterface
+    public function callbackFactory(Action|false $action): CallbackInterface
     {
         if ($action) {
             $actionType = $action->getType();

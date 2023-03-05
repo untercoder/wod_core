@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Telegram\WorldOfDiaries\Trait;
+namespace App\Trait;
 
 use DateTimeZone;
 

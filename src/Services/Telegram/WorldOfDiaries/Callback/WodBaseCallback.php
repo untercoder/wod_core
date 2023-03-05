@@ -3,10 +3,10 @@
 namespace App\Services\Telegram\WorldOfDiaries\Callback;
 
 use App\Entity\User;
+use App\Helper\Entity\ActionHelper;
+use App\Helper\Entity\UserHelper;
 use App\Services\Telegram\BaseCallback;
 use App\Services\Telegram\Logger\TelegramLogger;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\ActionHelper;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\UserHelper;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Telegram\Bot\Objects\Message;
 use Twig\Environment;

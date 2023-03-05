@@ -2,12 +2,11 @@
 
 namespace App\Services\Telegram;
 
-use App\Entity\Interface\EntityInterface;
 use App\Services\Telegram\Interface\EntityHelperInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-abstract class EntityHelper implements EntityHelperInterface
+abstract class EntityHelper
 {
 
     public function __construct(
@@ -16,7 +15,7 @@ abstract class EntityHelper implements EntityHelperInterface
     ) {
     }
 
-    public function save(EntityInterface $entity): void
+    public function save($entity): void
     {
         $entityManager = $this->doctrine->getManager();
         $entityManager->persist($entity);

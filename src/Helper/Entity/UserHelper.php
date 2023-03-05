@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Telegram\WorldOfDiaries\Helper\Entity;
+namespace App\Helper\Entity;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\Telegram\EntityHelper;
 use App\Services\Telegram\Logger\TelegramLogger;
-use App\Services\Telegram\WorldOfDiaries\Trait\DateTrait;
+use App\Trait\DateTrait;
 use Doctrine\Persistence\ManagerRegistry;
 use Telegram\Bot\Objects\Message;
 

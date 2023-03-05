@@ -2,14 +2,14 @@
 
 namespace App\Services\Telegram\WorldOfDiaries;
 
+use App\Helper\Entity\ActionHelper;
 use App\Services\Telegram\Logger\TelegramLogger;
 use App\Services\Telegram\TelegramBot;
-use App\Services\Telegram\WorldOfDiaries\Helper\Entity\ActionHelper;
 use Borsaco\TelegramBotApiBundle\Service\Bot;
 use Doctrine\DBAL\Exception;
 use Telegram\Bot\Objects\CallbackQuery;
-use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\Update;
 
 class WorldOfDiariesBot extends TelegramBot
 {

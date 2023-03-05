@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use App\Entity\Interface\EntityInterface;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User implements EntityInterface
+class User implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,10 +25,10 @@ class User implements EntityInterface
     private ?string $language_code = null;
 
     #[ORM\Column(nullable: true, unique: true)]
-    private ?int $post_id = null;
+    private ?int $postId = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $last_activity = null;
+    private ?\DateTimeInterface $lastActivity = null;
 
     public function getId(): ?int
     {
@@ -74,24 +73,24 @@ class User implements EntityInterface
 
     public function getPostId(): ?int
     {
-        return $this->post_id;
+        return $this->postId;
     }
 
-    public function setPostId(?int $post_id): self
+    public function setPostId(?int $postId): self
     {
-        $this->post_id = $post_id;
+        $this->postId = $postId;
 
         return $this;
     }
 
     public function getlastActivity(): ?\DateTimeInterface
     {
-        return $this->last_activity;
+        return $this->lastActivity;
     }
 
-    public function setlastActivity(\DateTimeInterface $last_activity): self
+    public function setlastActivity(\DateTimeInterface $lastActivity): self
     {
-        $this->last_activity = $last_activity;
+        $this->lastActivity = $lastActivity;
 
         return $this;
     }

@@ -2,12 +2,11 @@
 
 namespace App\Services\Telegram\Interface;
 
-use App\Entity\Interface\EntityInterface;
 use Telegram\Bot\Objects\Message;
 
 interface EntityHelperInterface
 {
-    public function make(Message $data): EntityInterface;
+    public function make(Message $data): mixed;
 
-    public function save(EntityInterface $entity): void;
+    public function save($entity): void;
 }

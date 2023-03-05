@@ -2,13 +2,13 @@
 
 namespace App\Services\Telegram;
 
-use App\Entity\Actions;
+use App\Entity\Action;
 use App\Services\Telegram\Interface\CallbackInterface;
 use App\Services\Telegram\Logger\TelegramLogger;
-use App\Services\Telegram\WorldOfDiaries\Trait\MessageTrait;
-use Telegram\Bot\Objects\Message;
+use App\Trait\MessageTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\CallbackQuery;
+use Telegram\Bot\Objects\Message;
 
 abstract class BaseCallback implements CallbackInterface
 {
@@ -17,7 +17,8 @@ abstract class BaseCallback implements CallbackInterface
     protected ?Message $message = null;
 
     protected ?CallbackQuery $callback = null;
-    protected Actions|false $action = false;
+
+    protected Action|false $action = false;
 
     public function __construct(
         protected TelegramLogger $logger,
@@ -42,9 +43,9 @@ abstract class BaseCallback implements CallbackInterface
     }
 
     /**
-     * @param Actions $action
+     * @param Action $action
      */
-    public function setAction(Actions|false $action): void
+    public function setAction(Action|false $action): void
     {
         $this->action = $action;
     }
